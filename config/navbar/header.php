@@ -53,5 +53,10 @@ return [
             "url" => "Ip",
             "title" => "Kontrollera IP",
         ],
+        [
+            "text" => "Kontrollera IP med geotagg",
+            "url" => "Ip2",
+            "title" => "Kontrollera IP med geotagg",
+        ],
     ],
 ];
