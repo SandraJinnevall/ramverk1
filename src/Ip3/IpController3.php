@@ -25,7 +25,6 @@ class IpController3 implements ContainerInjectableInterface
         $getcurrentIp = $ipController->getCurrentIP();
         $postion = $this->di->get("positionKey");
         $getcurrentCity = $postion->getPosition($getcurrentIp);
-        echo $getcurrentCity[3];
 
         if ($this->di->get("request")->hasGet("ipadress")) {
             $session = $this->di->get("session");
