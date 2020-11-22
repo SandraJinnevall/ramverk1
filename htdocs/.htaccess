@@ -3,7 +3,7 @@
 # environment and publishing to www.student.bth.se.
 # Adapted for the design course.
 #
-# Do NOT forget to change /~saji19/ to your own student acronym.
+# Do NOT forget to change /~mosstud/ to your own student acronym.
 #
 RewriteEngine on
 

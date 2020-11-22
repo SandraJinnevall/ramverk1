@@ -37,7 +37,7 @@ class Validera2 implements ContainerInjectableInterface
 
     public function getPosition($ipAdress)
     {
-        $accessKey = 'HEMLIGT';
+        $accessKey = 'f5afb01ded414d8fcb93fa58a34ca501';
         $curlLink = curl_init('http://api.ipstack.com/'.$ipAdress.'?access_key='.$accessKey.'');
         curl_setopt($curlLink, CURLOPT_RETURNTRANSFER, true);
         $json = curl_exec($curlLink);

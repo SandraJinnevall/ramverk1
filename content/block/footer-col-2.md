@@ -1,3 +1,3 @@
-#### Footer col 2
+#### Vem är jag?
 
-Med brödtext i ett stycke som säger något trevligt om just detta block, eller kanske en lista av länkar.
+Sandra Jinnevall, 22 år gammal.

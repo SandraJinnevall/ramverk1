@@ -1,3 +1,3 @@
-#### Footer col 3
+#### Vad gör jag just nu?
 
-Med brödtext i ett stycke som säger något trevligt om just detta block, eller kanske en lista av länkar.
+Har fullt upp med plugg, träning, hundar och renovering på ett nyligen husköp.
