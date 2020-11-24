@@ -17,6 +17,7 @@ class IpController3Test extends TestCase
         $this->di = new DIFactoryConfig();
         $di = $this->di;
         $di->loadServices(ANAX_INSTALL_PATH . "/config/di");
+        $di->loadServices(ANAX_INSTALL_PATH . "/test/config/di");
         $di->get('cache')->setPath(ANAX_INSTALL_PATH . "/test/cache");
         $this->controller = new IpController3();
         $this->controller->setDI($this->di);
