@@ -53,7 +53,8 @@ class IpController3 implements ContainerInjectableInterface
             $ipadress = $session->get("ipadress");
             $resultIp["ipadress"] = $ipadress;
             $resultIp["validerbar"] = $weather->check($ipadress);
-            $resultIp["weather"] = $weather->getWeather($ipadress);
+            $resultIp["weatherForecast"] = $weather->getWeather($ipadress)["weatherForecast"];
+            $resultIp["weatherHistory"] = $weather->getWeather($ipadress)["weatherHistory"];
 
             return $resultIp;
         }

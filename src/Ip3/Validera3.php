@@ -23,7 +23,7 @@ class Validera3 implements ContainerInjectableInterface
 
     public function check($ipadress)
     {
-        $message = $this->getWeather($ipadress)["message"];
+        $message = $this->getWeather($ipadress)["weatherForecast"]["message"];
         if ($message === 0) {
             return true;
         }
@@ -73,11 +73,18 @@ class Validera3 implements ContainerInjectableInterface
     {
         $ch1 = curl_init();
 
+        $ch2 = curl_init();
+
         curl_setopt($ch1, CURLOPT_URL, 'http://api.openweathermap.org/data/2.5/forecast?q='.$ipAdress.'&appid='.$this->apiWeatherKey);
         curl_setopt($ch1, CURLOPT_RETURNTRANSFER, true);
 
+        curl_setopt($ch2, CURLOPT_URL, 'http://api.openweathermap.org/data/2.5/find?q='.$ipAdress.'&appid='.$this->apiWeatherKey);
+        curl_setopt($ch2, CURLOPT_RETURNTRANSFER, true);
+
         $multi = curl_multi_init();
-        $json = curl_exec($ch1);
+        // $json = curl_exec($ch1);
+        curl_multi_add_handle($multi, $ch1);
+        curl_multi_add_handle($multi, $ch2);
 
         do {
             $status = curl_multi_exec($multi, $active);
@@ -86,14 +93,28 @@ class Validera3 implements ContainerInjectableInterface
             }
         } while ($active && $status == CURLM_OK);
 
+        $json = curl_multi_getcontent($ch1);
+        $json2 = curl_multi_getcontent($ch2);
+
         curl_multi_remove_handle($multi, $ch1);
+        curl_multi_remove_handle($multi, $ch2);
         curl_multi_close($multi);
         // $curlLink = curl_init('http://api.openweathermap.org/data/2.5/forecast?q='.$ipAdress.'&appid='.$this->apiWeatherKey);
         // curl_setopt($curlLink, CURLOPT_RETURNTRANSFER, true);
         // $json = curl_exec($curlLink);
         // curl_close($curlLink);
 
-        $apiResult = json_decode($json, true);
-        return $apiResult;
+        // $array[] = json_decode($json, true);
+        // $array[] = json_decode($json2, true);
+        $json = [
+            "weatherForecast" => json_decode($json, true),
+            "weatherHistory" => json_decode($json2, true)
+        ];
+
+        // $apiResult3 = json_encode(array_merge(json_decode($json, true),json_decode($json2, true)));
+        // $apiResult = json_decode($apiResult3, true);
+
+
+        return $json;
     }
 }

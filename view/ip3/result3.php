@@ -7,8 +7,8 @@ namespace Anax\View;
 
 <?php if ($validerbar) : ?>
     <h4>Väderrapport kommande 5 dagar</h4>
-    <?php if ($weather) :
-        echo "<table class='table'>
+    <?php if ($weatherForecast) :
+         echo "<table class='table'>
         <tr>
         <th>Dag & Tid</th>
         <th>Väderslag</th>
@@ -18,7 +18,7 @@ namespace Anax\View;
 
         ?>
 
-        <?php foreach ($weather["list"] as $key => $row) :
+        <?php foreach ($weatherForecast["list"] as $key => $row) :
             ?>
             <?php
             echo "<tr>";
@@ -30,12 +30,36 @@ namespace Anax\View;
         echo "</tr>";
         echo "</table>";
         ?>
+        <h4>Väderrapport för de dagar som har varit (Olika många dagar beroende på stad)</h4>
+        <?php if ($weatherHistory) :
+            echo "<table class='table'>
+            <tr>
+            <th>För hur många dagar sen</th>
+            <th>Väderslag</th>
+            <th>Temp</th>
+            <th>Väderbild</th>
+            </tr>";
+
+            ?>
+
+            <?php foreach ($weatherHistory["list"] as $key => $row) :
+                ?>
+                <?php
+                echo "<tr>";
+                echo "<td>" .json_encode($key + 1). "</td>";
+                echo "<td>" . trim(json_encode($row["weather"][0]["main"]), '"') . "</td>";
+                echo "<td>" . round(json_encode($row["main"]["temp"]-273.15), 1). " C°" . "</td>";
+                echo "<td><img src=\"http://openweathermap.org/img/wn/" . trim(json_encode($row["weather"][0]["icon"]), '"') . "@2x.png\"></td>";
+            endforeach;
+            echo "</tr>";
+            echo "</table>";
+            ?>
         <h1>Karta</h1>
-           <?php
-            $city = trim(json_encode($weather["city"]["name"]), '"');
-            $country = trim(json_encode($weather["city"]["country"]), '"');
-            $long = trim(json_encode($weather["city"]["coord"]["lon"]), '"');
-            $lat = trim(json_encode($weather["city"]["coord"]["lat"]), '"');
+            <?php
+            $city = trim(json_encode($weatherForecast["city"]["name"]), '"');
+            $country = trim(json_encode($weatherForecast["city"]["country"]), '"');
+            $long = trim(json_encode($weatherForecast["city"]["coord"]["lon"]), '"');
+            $lat = trim(json_encode($weatherForecast["city"]["coord"]["lat"]), '"');
             ?>
            <p>Stad: <?= $city ?></p>
            <p>Land: <?= $country ?></p>
@@ -58,6 +82,7 @@ namespace Anax\View;
              L.marker([latitude, longitude]).addTo(map)
              .openPopup();
            </script>
+        <?php endif; ?>
     <?php endif; ?>
 <?php else : ?>
     <p>Staden <?= htmlentities($ipadress) ?> hittades inte, var vänligen och försök igen. <a href="Ip3">TILLBAKA</a></p>

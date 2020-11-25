@@ -23,7 +23,8 @@ class CheckjsonController3 implements ContainerInjectableInterface
         $json = [
             "Stad" => $ipadress,
             "validerbar" => $weather->check($ipadress),
-            "weather" => $weather->getWeather($ipadress)
+            "weatherForecast" => $weather->getWeather($ipadress)["weatherForecast"],
+            "weatherHistory" => $weather->getWeather($ipadress)["weatherHistory"],
         ];
 
         return [$json];
